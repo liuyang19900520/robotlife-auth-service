@@ -36,7 +36,9 @@ public class AuthenticateController {
     @PostMapping("/signin")
     public Object signin(@RequestBody SysUser loginUser) {
 
-        return ResultVo.success(Messages.OK, userFeignClient.signIn(loginUser));
+        SysUser user = userFeignClient.findAccount(loginUser.getUserName());
+
+        return ResultVo.success(Messages.OK, user);
 
 //        Set<String> roles = authenticateService.listRolesByAccount(loginUser.getUsername());
 //        Set<String> permissions = authenticateService.listPermissionsByAccount(loginUser.getUsername());

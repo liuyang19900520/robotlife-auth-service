@@ -3,14 +3,16 @@ package com.liuyang19900520.robotlife.auth.shiro.realm;
 
 import com.liuyang19900520.robotlife.auth.commons.util.CryptoUtil;
 import com.liuyang19900520.robotlife.auth.domain.SysUser;
+import com.liuyang19900520.robotlife.auth.service.AuthenticateService;
 import com.liuyang19900520.robotlife.auth.shiro.token.HmacToken;
-import com.liuyang19900520.robotlife.auth.web.feign.UserFeignClient;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Set;
 
 /**
  * Created by liuyang on 2018/3/16
@@ -22,7 +24,8 @@ public class HmacRealm extends AuthorizingRealm {
     private static final int EXPIRE_TIME = 600000000;
 
     @Autowired
-    UserFeignClient userFeignClient;
+    AuthenticateService authenticateService;
+
 
     /**
      * 认证
@@ -54,14 +57,11 @@ public class HmacRealm extends AuthorizingRealm {
         String userName = hmacToken.getClientKey();
 
 
-        // 根据用户名查询数据库
-        SysUser params = new SysUser();
-        params.setUserName(userName);
-        SysUser user = userFeignClient.signIn(params);
+        SysUser user = authenticateService.findUserByAccount(userName);
 
 
         // 用户不存在
-        if (user == null && user.getUserName() == null) {
+        if (user == null || user.getUserName() == null) {
             throw new UnknownAccountException();
         }
 
@@ -84,30 +84,21 @@ public class HmacRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String payload = (String) principals.getPrimaryPrincipal();
+
         if (payload.startsWith("hmac:") && payload.charAt(5) == '{'
                 && payload.charAt(payload.length() - 1) == '}') {
             String appId = payload.substring(6, payload.length() - 1);
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-//            Set<String> roles = this.authenticateService.listRolesByAccount(appId);
-//            Set<String> permissions = this.authenticateService.listPermissionsByAccount(appId);
-//            if (null != roles && !roles.isEmpty()) {
-//                info.setRoles(roles);
-//            }
-//            if (null != permissions && !permissions.isEmpty()) {
-//                info.setStringPermissions(permissions);
-//            }
+            Set<String> roles = authenticateService.listRolesByAccount(appId);
+            Set<String> permissions = this.authenticateService.listPermissionsByAccount(appId);
+            if (null != roles && !roles.isEmpty()) {
+                info.setRoles(roles);
+            }
+            if (null != permissions && !permissions.isEmpty()) {
+                info.setStringPermissions(permissions);
+            }
             return info;
         }
-//        String clientKey = (String) principals.getPrimaryPrincipal();
-//        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-//
-//        // 根据客户标识（可以是用户名、app id等等） 查询并设置角色
-//        Set<String> roles = authenticateService.listRolesByAccount(clientKey);
-//        info.setRoles(roles);
-//
-//        // 根据客户标识（可以是用户名、app id等等） 查询并设置权限
-//        Set<String> permissions = authenticateService.listPermissionsByAccount(clientKey);
-//        info.setStringPermissions(permissions);
 
         return null;
     }

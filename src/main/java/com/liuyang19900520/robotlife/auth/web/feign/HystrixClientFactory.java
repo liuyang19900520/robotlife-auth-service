@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @Component
 @Slf4j
 public class HystrixClientFactory implements FallbackFactory<UserFeignClient> {
@@ -23,8 +25,18 @@ public class HystrixClientFactory implements FallbackFactory<UserFeignClient> {
             }
 
             @Override
-            public SysUser signIn(SysUser sysUser) {
+            public SysUser findAccount(String userName) {
                 return new SysUser();
+            }
+
+            @Override
+            public Set<String> listRolesByAccount(String userName) {
+                return null;
+            }
+
+            @Override
+            public Set<String> listPermissionsByAccount(String userName) {
+                return null;
             }
         };
     }
