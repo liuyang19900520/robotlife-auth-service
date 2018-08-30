@@ -1,4 +1,4 @@
-package com.liuyang19900520.robotlife.auth.web.feign;
+package com.liuyang19900520.robotlife.auth.feign;
 
 
 import com.liuyang19900520.robotlife.auth.domain.SysUser;
@@ -17,16 +17,13 @@ import java.util.Set;
 @Component
 public interface UserFeignClient {
 
-    @RequestMapping(value = "/users/signup", method = RequestMethod.POST)
-    Object signUp(@RequestBody SysUser sysUser);
-
     @RequestMapping(value = "/users/signin", method = RequestMethod.POST)
     SysUser findAccount(String sysUser);
 
-    @RequestMapping(value = "/roles", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/roles", method = RequestMethod.POST)
     public Set<String> listRolesByAccount(String userName);
 
-    @RequestMapping(value = "/permissions", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/permissions", method = RequestMethod.POST)
     public Set<String> listPermissionsByAccount(String userName);
 
 

@@ -11,7 +11,8 @@ public class Test {
 
     public static void main(String[] args) {
         MultiValueMap<String, Object> dataMap = new LinkedMultiValueMap<String, Object>();
-        String clientKey = "576996936";// 客户端标识（用户名）
+//        String clientKey = "576996936";// 客户端标识（用户名）
+        String clientKey = "super";// 客户端标识（用户名）
         Long current = System.currentTimeMillis();
         String timeStamp = current.toString();// 时间戳
 

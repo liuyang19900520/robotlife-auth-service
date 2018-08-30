@@ -4,7 +4,8 @@ package com.liuyang19900520.robotlife.auth.web.controller;
 import com.liuyang19900520.robotlife.auth.commons.pojo.Messages;
 import com.liuyang19900520.robotlife.auth.commons.pojo.ResultVo;
 import com.liuyang19900520.robotlife.auth.domain.SysUser;
-import com.liuyang19900520.robotlife.auth.web.feign.UserFeignClient;
+import com.liuyang19900520.robotlife.auth.service.AuthenticateService;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthenticateController {
 
+
     @Autowired
-    UserFeignClient userFeignClient;
+    AuthenticateService authenticateService;
+
 
     /**
      * 登录
@@ -36,7 +39,7 @@ public class AuthenticateController {
     @PostMapping("/signin")
     public Object signin(@RequestBody SysUser loginUser) {
 
-        SysUser user = userFeignClient.findAccount(loginUser.getUserName());
+        SysUser user = authenticateService.findUserByAccount(loginUser.getUserName());
 
         return ResultVo.success(Messages.OK, user);
 
@@ -72,14 +75,6 @@ public class AuthenticateController {
 
     }
 
-    @PostMapping("/signup")
-    public Object signup(@RequestBody SysUser loginUser) {
-
-        userFeignClient.signUp(loginUser);
-
-        return ResultVo.success(Messages.OK, "asdf");
-
-    }
 
 
 }

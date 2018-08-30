@@ -38,4 +38,5 @@ public interface AuthenticateService {
     Set<String> listPermissionsByAccount(String userName);
 
 
+
 }

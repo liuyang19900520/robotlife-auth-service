@@ -3,11 +3,9 @@ package com.liuyang19900520.robotlife.auth.service.impl;
 
 import com.liuyang19900520.robotlife.auth.commons.util.CryptoUtil;
 import com.liuyang19900520.robotlife.auth.domain.SysUser;
+import com.liuyang19900520.robotlife.auth.feign.UserFeignClient;
 import com.liuyang19900520.robotlife.auth.service.AuthenticateService;
-import com.liuyang19900520.robotlife.auth.web.feign.UserFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -16,6 +14,7 @@ import java.util.UUID;
 
 /**
  * Created by liuyang on 2018/3/16
+ *
  * @author liuya
  */
 @Service
@@ -36,15 +35,28 @@ public class AuthenticateServiceImpl implements AuthenticateService {
         StringBuffer strRoles = new StringBuffer();
         StringBuffer strPerms = new StringBuffer();
 
-        permissions.stream().forEachOrdered(s -> strPerms.append(s).append(","));
-        String permsJwt = strPerms.substring(0, strPerms.length() - 1);
+        roles.stream().filter(role -> !role.equals("") && role != null)
+                .forEachOrdered(s -> strRoles.append(s).append(","));
 
 
-        roles.stream().forEachOrdered(s -> strRoles.append(s).append(","));
-        String rolesJwt = strRoles.substring(0, strRoles.length() - 1);
+        permissions.stream().filter(permission -> !permission.equals("") && permission != null)
+                .forEachOrdered(s -> strPerms.append(s).append(","));
+
+        String permsJwt = "";
+        String rolesJwt = "";
+
+        if (!strRoles.equals("")) {
+            rolesJwt = strRoles.substring(0, strRoles.length() - 1);
+        }
+        if (!strPerms.equals("")) {
+            permsJwt = strPerms.substring(0, strPerms.length() - 1);
+        }
+
 
         String jwt = CryptoUtil.issueJwt(UUID.randomUUID().toString(), userName,
                 rolesJwt, permsJwt, new Date(), CryptoUtil.ACCESS_TOKEN_TYPE);
+
+        user.setToken(jwt);
 
         return user;
     }
@@ -58,4 +70,5 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     public Set<String> listPermissionsByAccount(String userName) {
         return userFeignClient.listPermissionsByAccount(userName);
     }
+
 }
