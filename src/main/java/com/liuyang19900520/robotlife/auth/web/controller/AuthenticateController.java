@@ -1,8 +1,8 @@
 package com.liuyang19900520.robotlife.auth.web.controller;
 
 
-import com.liuyang19900520.robotlife.auth.commons.pojo.Messages;
-import com.liuyang19900520.robotlife.auth.commons.pojo.ResultVo;
+import com.liuyang19900520.robotlife.auth.common.pojo.Messages;
+import com.liuyang19900520.robotlife.auth.common.pojo.ResultVo;
 import com.liuyang19900520.robotlife.auth.domain.SysUser;
 import com.liuyang19900520.robotlife.auth.service.AuthenticateService;
 

@@ -18,9 +18,9 @@
 package com.liuyang19900520.robotlife.auth.shiro.filter;
 
 import com.google.common.collect.Maps;
-import com.liuyang19900520.robotlife.auth.commons.pojo.Messages;
-import com.liuyang19900520.robotlife.auth.commons.pojo.ResultVo;
-import com.liuyang19900520.robotlife.auth.commons.util.LJsonUtils;
+import com.liuyang19900520.robotlife.auth.common.pojo.Messages;
+import com.liuyang19900520.robotlife.auth.common.pojo.ResultVo;
+import com.liuyang19900520.robotlife.auth.common.util.LJsonUtils;
 import com.liuyang19900520.robotlife.auth.domain.SysUser;
 import com.liuyang19900520.robotlife.auth.shiro.token.HmacToken;
 import com.liuyang19900520.robotlife.auth.shiro.token.JwtToken;
@@ -54,7 +54,7 @@ public abstract class StatelessFilter extends AccessControlFilter {
         String jsonStr = LRequestJsonUtils.getRequestJsonString(myWrapper);
         SysUser loginUser = LJsonUtils.jsonToPojo(jsonStr, SysUser.class);
         String clientKey = loginUser.getUserName();
-        String timeStamp = req.getHeader("Date");
+        String timeStamp = req.getHeader("X-Date");
         String digest = req.getHeader("Authorization");
         String jwt = req.getHeader("token");
         return (request instanceof HttpServletRequest)
@@ -71,7 +71,7 @@ public abstract class StatelessFilter extends AccessControlFilter {
         String jsonStr = LRequestJsonUtils.getRequestJsonString(myWrapper);
         SysUser loginUser = LJsonUtils.jsonToPojo(jsonStr, SysUser.class);
         String clientKey = loginUser.getUserName();
-        String timeStamp = req.getHeader("Date");
+        String timeStamp = req.getHeader("X-Date");
         String digest = req.getHeader("Authorization");
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("loginUser", loginUser);

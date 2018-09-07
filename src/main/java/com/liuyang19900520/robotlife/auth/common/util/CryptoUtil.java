@@ -1,12 +1,10 @@
-package com.liuyang19900520.robotlife.auth.commons.util;
+package com.liuyang19900520.robotlife.auth.common.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.compression.DefaultCompressionCodecResolver;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
@@ -147,20 +145,68 @@ public class CryptoUtil {
     /**
      * 字节数组转字符串
      *
-     * @param bytes 字节数组
+     * @param buffer 字节数组
      * @return 字符串
      */
-    public static String byte2HexStr(byte[] bytes) {
-        StringBuilder hs = new StringBuilder();
-        String stmp;
-        for (int n = 0; bytes != null && n < bytes.length; n++) {
-            stmp = Integer.toHexString(bytes[n] & 0XFF);
-            if (stmp.length() == 1) {
-                hs.append('0');
-            }
-            hs.append(stmp);
+    public static String byte2HexStr(byte[] buffer) {
+//        StringBuilder hs = new StringBuilder();
+//        String stmp;
+//        for (int n = 0; bytes != null && n < bytes.length; n++) {
+//            stmp = Integer.toHexString(bytes[n] & 0XFF);
+//            if (stmp.length() == 1) {
+//                hs.append('0');
+//            }
+//            hs.append(stmp);
+//        }
+//        return hs.toString().toUpperCase();
+        String reslut = new String("");
+        int length = buffer.length;
+        int index = 0;
+        for(index = 0;(index+3)<length;index+=3){
+            byte[] temp = {buffer[index],buffer[index+1],buffer[index+2]};
+            reslut += ConvertByte3ToString(temp);
         }
-        return hs.toString().toUpperCase();
+        if(length%3 == 1){
+            byte[] temp = {buffer[length-1]};
+            reslut += ConvertByteToString(temp);
+        }else if(length%3 == 2){
+            byte[] temp = {buffer[length-2],buffer[length-1]};
+            reslut += ConvertByte2ToString(temp);
+        }
+        return reslut;
+    }
+
+    private static char[] CharCode = {
+            'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P',
+            'Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f',
+            'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
+            'w','x','y','z','0','1','2','3','4','5','6','7','8','9','+','/'
+    };
+
+    private static String ConvertByte3ToString(byte[] bytes){
+        String temp = new String("");
+        temp += CharCode[((bytes[0])>>>2)&0x3f];
+        temp += CharCode[((bytes[0]&0x03)<<4)|((bytes[1]>>>4)&0x0f)];
+        temp += CharCode[((bytes[1]&0x0f)<<2)|((bytes[2]>>>6)&0x03)];
+        temp += CharCode[bytes[2]&0x3f];
+        return temp;
+    }
+
+    private static String ConvertByte2ToString(byte[] bytes){
+        String temp = new String("");
+        temp += CharCode[((bytes[0])>>>2)&0x3f];
+        temp += CharCode[((bytes[0]&0x03)<<4)|((bytes[1]>>>4)&0x0f)];
+        temp += CharCode[((bytes[1]&0x0f)<<2)];
+        temp += '=';
+        return temp;
+    }
+
+    private static String ConvertByteToString(byte[] bytes){
+        String temp = new String("");
+        temp += CharCode[((bytes[0])>>>2)&0x3f];
+        temp += CharCode[((bytes[0]&0x03)<<4)];
+        temp += "==";
+        return temp;
     }
 
 

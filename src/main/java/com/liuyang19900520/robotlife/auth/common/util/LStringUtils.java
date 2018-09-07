@@ -1,4 +1,4 @@
-package com.liuyang19900520.robotlife.auth.commons.util;
+package com.liuyang19900520.robotlife.auth.common.util;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringEscapeUtils;

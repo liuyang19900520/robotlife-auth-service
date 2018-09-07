@@ -1,9 +1,9 @@
-package com.liuyang19900520.robotlife.auth.commons.util.json;
+package com.liuyang19900520.robotlife.auth.common.util.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.liuyang19900520.robotlife.auth.commons.util.LStringUtils;
+import com.liuyang19900520.robotlife.auth.common.util.LStringUtils;
 
 
 /**

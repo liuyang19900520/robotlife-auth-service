@@ -1,4 +1,4 @@
-package com.liuyang19900520.robotlife.auth.commons.pojo;
+package com.liuyang19900520.robotlife.auth.common.pojo;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.liuyang19900520.robotlife.auth.commons.util;
+package com.liuyang19900520.robotlife.auth.common.util;
 
 import java.util.ArrayList;
 import java.util.List;

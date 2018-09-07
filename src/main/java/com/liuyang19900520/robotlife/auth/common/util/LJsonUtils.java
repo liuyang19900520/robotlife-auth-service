@@ -1,10 +1,10 @@
-package com.liuyang19900520.robotlife.auth.commons.util;
+package com.liuyang19900520.robotlife.auth.common.util;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.liuyang19900520.robotlife.auth.commons.util.json.JsonObjectMapper;
+import com.liuyang19900520.robotlife.auth.common.util.json.JsonObjectMapper;
 
 import java.util.List;
 

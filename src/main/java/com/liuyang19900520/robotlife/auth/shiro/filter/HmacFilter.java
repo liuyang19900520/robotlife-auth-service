@@ -1,8 +1,8 @@
 package com.liuyang19900520.robotlife.auth.shiro.filter;
 
-import com.liuyang19900520.robotlife.auth.commons.pojo.Messages;
-import com.liuyang19900520.robotlife.auth.commons.pojo.ResultVo;
-import com.liuyang19900520.robotlife.auth.commons.util.LJsonUtils;
+import com.liuyang19900520.robotlife.auth.common.pojo.Messages;
+import com.liuyang19900520.robotlife.auth.common.pojo.ResultVo;
+import com.liuyang19900520.robotlife.auth.common.util.LJsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;

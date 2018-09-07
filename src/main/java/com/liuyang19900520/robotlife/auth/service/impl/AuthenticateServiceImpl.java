@@ -1,7 +1,7 @@
 package com.liuyang19900520.robotlife.auth.service.impl;
 
 
-import com.liuyang19900520.robotlife.auth.commons.util.CryptoUtil;
+import com.liuyang19900520.robotlife.auth.common.util.CryptoUtil;
 import com.liuyang19900520.robotlife.auth.domain.SysUser;
 import com.liuyang19900520.robotlife.auth.feign.UserFeignClient;
 import com.liuyang19900520.robotlife.auth.service.AuthenticateService;
@@ -45,10 +45,10 @@ public class AuthenticateServiceImpl implements AuthenticateService {
         String permsJwt = "";
         String rolesJwt = "";
 
-        if (!strRoles.equals("")) {
+        if (!strRoles.toString().equals("")) {
             rolesJwt = strRoles.substring(0, strRoles.length() - 1);
         }
-        if (!strPerms.equals("")) {
+        if (!strPerms.toString().equals("")) {
             permsJwt = strPerms.substring(0, strPerms.length() - 1);
         }
 

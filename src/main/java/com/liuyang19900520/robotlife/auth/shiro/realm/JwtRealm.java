@@ -1,7 +1,7 @@
 package com.liuyang19900520.robotlife.auth.shiro.realm;
 
 
-import com.liuyang19900520.robotlife.auth.commons.util.CryptoUtil;
+import com.liuyang19900520.robotlife.auth.common.util.CryptoUtil;
 import com.liuyang19900520.robotlife.auth.shiro.token.JwtToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.MalformedJwtException;

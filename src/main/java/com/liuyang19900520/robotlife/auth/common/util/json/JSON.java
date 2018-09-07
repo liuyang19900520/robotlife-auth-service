@@ -1,4 +1,4 @@
-package com.liuyang19900520.robotlife.auth.commons.util.json;
+package com.liuyang19900520.robotlife.auth.common.util.json;
 
 
 import java.lang.annotation.*;

@@ -1,9 +1,9 @@
-package com.liuyang19900520.robotlife.auth.commons.util.json.spring;
+package com.liuyang19900520.robotlife.auth.common.util.json.spring;
 
 
-import com.liuyang19900520.robotlife.auth.commons.util.json.CustomerJsonSerializer;
-import com.liuyang19900520.robotlife.auth.commons.util.json.JSON;
-import com.liuyang19900520.robotlife.auth.commons.util.json.JSONS;
+import com.liuyang19900520.robotlife.auth.common.util.json.CustomerJsonSerializer;
+import com.liuyang19900520.robotlife.auth.common.util.json.JSON;
+import com.liuyang19900520.robotlife.auth.common.util.json.JSONS;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.MethodParameter;
